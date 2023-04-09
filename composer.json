@@ -1,0 +1,23 @@
+{
+    "name": "utilisateur/rendu-api",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "TommySerain",
+            "email": "tommyserain@yahoo.fr"
+        }
+    ],
+    "scripts": {
+        "start" : "php -S localhost:8000 -t public/ public/index.php"
+    },
+    "config": {
+        "process-timeout": 0
+    },
+    "require": {
+        "symfony/dotenv": "^6.0"
+    }
+}
