@@ -15,9 +15,9 @@ Pour pouvoir gérer ces deux tables, l'API aura un crud sur chacune d'elles.
 # CRUD Actors
 ## première étape
 J'ai d'abbord créé tout le crud dans l'index et vérifié le bon fonctionnement
-![Texte alternatif](/chemin/access/image.jpg "Titre de l'image").
+![Tout dans index](/img/all-index.png "all-index").
 
 ## deuxième étape
 Création d'une class ActorsCrud dans un dossier Crud.
 Je déplace le petit à petit le crud actor dans cette class en commençant par le read et le create pour les collection
-![Texte alternatif](/chemin/access/image.jpg "Titre de l'image").
+![class ActorsCrud](/img/class-ActorsCrud.png "ActorsCrud").
