@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\config\DbInitializer;
+use App\crud\ActorsCrud;
 use Symfony\Component\Dotenv\Dotenv;
 
 
@@ -28,13 +29,12 @@ $uriParts = explode("/", $uri);
 $uriPartsCount = count($uriParts);
 $resourceName = $uriParts[1];
 
+$actorCrud = new ActorsCrud($pdo);
+
 // Crud Ressource actor
 // collection
 if ($uri === "/actor" && $httpMethod === "GET") {
-    $stmt = $pdo->query("SELECT * FROM actor");
-    $actors = $stmt->fetchAll();
-    $nbActors = count($actors);
-    echo json_encode(["actor" => $actors, "nb" => $nbActors]);
+    echo json_encode($actorCrud->findAllActors());
     exit;
 }
 
@@ -60,7 +60,7 @@ $id = intval($uriParts[2]);
 if ($id === 0) {
     http_response_code(404);
     echo json_encode([
-        'error' => 'Produit non trouvé'
+        'error' => 'Acteur non trouvé'
     ]);
     exit;
 }
@@ -72,7 +72,7 @@ if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "GET") {
     $actor = $stmt->fetch();
     if ($actor === false) {
         http_response_code(404);
-        echo json_encode(['error' => "produit non trouvé"]);
+        echo json_encode(['error' => "Acteur non trouvé"]);
         exit;
     }
     echo json_encode($actor);
