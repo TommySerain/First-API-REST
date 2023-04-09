@@ -34,26 +34,24 @@ $actorCrud = new ActorsCrud($pdo);
 // Crud Ressource actor
 // collection
 if ($uri === "/actor" && $httpMethod === "GET") {
-    echo json_encode($actorCrud->findAllActors());
+    echo json_encode($actorCrud->readAllActors());
     exit;
 }
 
 if ($uri === "/actor" && $httpMethod === "POST") {
     $data = json_decode(file_get_contents('php://input'), true);
-    $query = "INSERT INTO actor VALUES (null, :firstname_a, :name_a, :gender_a)";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([
-        "firstname_a" => $data['firstname_a'],
-        "name_a" => $data['name_a'],
-        "gender_a" => $data['gender_a']
-    ]);
-    $actorId = $pdo->lastInsertId();
+
+    json_encode($actorCrud->createActor($data));
+
+    $insertActorId = $pdo->lastInsertId();
     http_response_code(201);
     echo json_encode([
-        'uri' => '/actor/' . $actorId
+        'uri' => '/actor/' . $insertActorId
     ]);
     exit;
 }
+
+
 
 // unique
 $id = intval($uriParts[2]);
