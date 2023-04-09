@@ -28,11 +28,14 @@ $uriParts = explode("/", $uri);
 $uriPartsCount = count($uriParts);
 $resourceName = $uriParts[1];
 
+// Crud Ressource actor
+// collection
 if ($uri === "/actor" && $httpMethod === "GET") {
     $stmt = $pdo->query("SELECT * FROM actor");
     $actors = $stmt->fetchAll();
     $nbActors = count($actors);
     echo json_encode(["actor" => $actors, "nb" => $nbActors]);
+    exit;
 }
 
 if ($uri === "/actor" && $httpMethod === "POST") {
@@ -44,9 +47,82 @@ if ($uri === "/actor" && $httpMethod === "POST") {
         "name_a" => $data['name_a'],
         "gender_a" => $data['gender_a']
     ]);
-    $actorId=$pdo->lastInsertId();
+    $actorId = $pdo->lastInsertId();
     http_response_code(201);
     echo json_encode([
         'uri' => '/actor/' . $actorId
     ]);
+    exit;
+}
+
+// unique
+$id = intval($uriParts[2]);
+if ($id === 0) {
+    http_response_code(404);
+    echo json_encode([
+        'error' => 'Produit non trouvé'
+    ]);
+    exit;
+}
+// lire
+if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "GET") {
+    $query = "SELECT * FROM actor WHERE id_a=:id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['id' => $id]);
+    $actor = $stmt->fetch();
+    if ($actor === false) {
+        http_response_code(404);
+        echo json_encode(['error' => "produit non trouvé"]);
+        exit;
+    }
+    echo json_encode($actor);
+    http_response_code(201);
+}
+// modifier
+if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "PUT") {
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if (!isset($data['firstname_a']) || !isset($data['name_a']) || !isset($data['gender_a'])) {
+        http_response_code(422);
+        echo json_encode([
+            'error' => 'Le prénom, le nom et le genre sont requis'
+        ]);
+        exit;
+    }
+
+    $query = "UPDATE actor SET firstname_a=:firstname_a, name_a=:name_a, gender_a=:gender_a WHERE id_a=:id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(
+        [
+            "firstname_a" => $data['firstname_a'],
+            "name_a" => $data['name_a'],
+            "gender_a" => $data['gender_a'],
+            'id' => $id
+        ]
+    );
+
+    if ($stmt->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode([
+            'error' => 'Acteur non trouvé'
+        ]);
+        exit;
+    }
+    http_response_code(204);
+    exit;
+}
+
+// supprimer
+if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "DELETE") {
+    $query = "DELETE FROM actor WHERE id_a=:id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(["id" => $id]);
+    if ($stmt->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode([
+            'error' => 'Acteur non trouvé'
+        ]);
+        exit;
+    }
+    http_response_code(204);
 }
