@@ -52,7 +52,6 @@ if ($uri === "/actor" && $httpMethod === "POST") {
 }
 
 
-
 // unique
 $id = intval($uriParts[2]);
 if ($id === 0) {
@@ -62,44 +61,24 @@ if ($id === 0) {
     ]);
     exit;
 }
+
 // lire
 if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "GET") {
-    $query = "SELECT * FROM actor WHERE id_a=:id";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(['id' => $id]);
-    $actor = $stmt->fetch();
-    if ($actor === false) {
+    $findActor = $actorCrud->readOneActor($id);
+    if ($findActor === false) {
         http_response_code(404);
         echo json_encode(['error' => "Acteur non trouvé"]);
         exit;
     }
-    echo json_encode($actor);
-    http_response_code(201);
+    echo json_encode($findActor);
+    http_response_code(200);
 }
+
 // modifier
 if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "PUT") {
     $data = json_decode(file_get_contents("php://input"), true);
-
-    if (!isset($data['firstname_a']) || !isset($data['name_a']) || !isset($data['gender_a'])) {
-        http_response_code(422);
-        echo json_encode([
-            'error' => 'Le prénom, le nom et le genre sont requis'
-        ]);
-        exit;
-    }
-
-    $query = "UPDATE actor SET firstname_a=:firstname_a, name_a=:name_a, gender_a=:gender_a WHERE id_a=:id";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(
-        [
-            "firstname_a" => $data['firstname_a'],
-            "name_a" => $data['name_a'],
-            "gender_a" => $data['gender_a'],
-            'id' => $id
-        ]
-    );
-
-    if ($stmt->rowCount() === 0) {
+    $updatedActor = $actorCrud->updateActor($data, $id);
+    if ($updatedActor === false) {
         http_response_code(404);
         echo json_encode([
             'error' => 'Acteur non trouvé'
@@ -112,10 +91,8 @@ if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "PUT") {
 
 // supprimer
 if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "DELETE") {
-    $query = "DELETE FROM actor WHERE id_a=:id";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(["id" => $id]);
-    if ($stmt->rowCount() === 0) {
+    $deletedActor=$actorCrud->deleteActor($id);
+    if ($deletedActor === false) {
         http_response_code(404);
         echo json_encode([
             'error' => 'Acteur non trouvé'
