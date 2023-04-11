@@ -25,8 +25,6 @@ $uriPartsCount = count($uriParts);
 $resourceName = $uriParts[1];
 
 
-
-
 // Crud Ressource actor
 // collection
 if (str_contains($uri, "/actor")){
