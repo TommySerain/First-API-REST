@@ -21,3 +21,11 @@ J'ai d'abbord créé tout le crud dans l'index et vérifié le bon fonctionnemen
 Création d'une class ActorsCrud dans un dossier Crud.
 Je déplace le petit à petit le crud actor dans cette class en commençant par le read et le create pour les collection
 ![class ActorsCrud](/img/class-ActorsCrud.png "ActorsCrud").
+
+## troisième étape
+Création d'une class ActorsCrudController qui va se charger de tous les controles du traitement de la requête et d'appeler ActorsCrud et ses méthodes.  
+ActrosCrud ne fera plus que communiquer avec la BDD.  
+Pendant cette étape j'ai aussi déporté le gestionnaire d'exception de l'index à une class et j'ai ajouté l'affichage du fichier et de la ligne de l'erreur pour plus de praticité pendant le codage.  
+![class ActorsCrudController](/img/class-ActorsCrudController.png "ActorsCrudController")
+![class ActorsCrud modifiée](/img/new-class-ActorsCrud.png "new-ActorsCrud")
+
