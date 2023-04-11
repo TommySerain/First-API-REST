@@ -55,7 +55,8 @@ class ActorsCrud
                 'id' => $id
             ]
         );
-        return ($stmt->rowCount() === 0) ? false : true;
+        //return ($stmt->rowCount() === 0) ? false : true;
+        return ($stmt->rowCount() > 0);
     }
 
     // DELETE
