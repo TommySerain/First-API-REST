@@ -23,13 +23,6 @@ class ActorsCrud
     // CREATE
     public function createActor(array $data): bool
     {
-        if (!isset($data['firstname_a']) || !isset($data['name_a']) || !isset($data['gender_a'])) {
-            http_response_code(422);
-            echo json_encode([
-                'error' => 'Firstname, name and gender or required'
-            ]);
-            exit;
-        }
         $query = "INSERT INTO actor VALUES (null, :firstname_a, :name_a, :gender_a)";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([
@@ -52,13 +45,6 @@ class ActorsCrud
     // UPDATE
     public function updateActor(array $data, int $id): bool
     {
-        if (!isset($data['firstname_a']) || !isset($data['name_a']) || !isset($data['gender_a'])) {
-            http_response_code(422);
-            echo json_encode([
-                'error' => 'Le prénom, le nom et le genre sont requis'
-            ]);
-            exit;
-        }
         $query = "UPDATE actor SET firstname_a=:firstname_a, name_a=:name_a, gender_a=:gender_a WHERE id_a=:id";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(
