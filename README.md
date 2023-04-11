@@ -29,3 +29,5 @@ Pendant cette étape j'ai aussi déporté le gestionnaire d'exception de l'index
 ![class ActorsCrudController](/img/class-ActorsCrudController.png "ActorsCrudController")
 ![class ActorsCrud modifiée](/img/new-class-ActorsCrud.png "new-ActorsCrud")
 
+# CRUD Roles
+J'ai créé un CrudRoles et un CrudRoleController sur le même modele que le CrudActor
