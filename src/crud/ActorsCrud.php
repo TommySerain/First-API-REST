@@ -4,11 +4,9 @@ namespace App\crud;
 
 use PDO;
 
-class ActorsCrud
+class ActorsCrud extends Crud
 {
-    public function __construct(private PDO $pdo)
-    {
-    }
+
     // Collection
     // READ
     public function readAllActors(): array

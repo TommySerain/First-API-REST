@@ -4,11 +4,8 @@ namespace App\crud;
 
 use PDO;
 
-class RolesCrud
+class RolesCrud extends Crud
 {
-    public function __construct(private PDO $pdo)
-    {
-    }
     // Collection
     // READ
     public function readAllRoles(): array
