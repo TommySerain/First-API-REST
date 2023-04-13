@@ -20,7 +20,7 @@ ExceptionHandler::ExceptionHandler();
 
 $uri = $_SERVER['REQUEST_URI'];
 $httpMethod = $_SERVER['REQUEST_METHOD'];
-$urisParts = explode("/", $uri);
+$uriParts = explode("/", $uri);
 $uriPartsCount = count($uriParts);
 $resourceName = $uriParts[1];
 
