@@ -91,7 +91,7 @@ class RolesCrudController
                 exit;
             }
             $updatedRole = $this->rolesCrud->updateRole($data, $id);
-            if ($updatedRole === 0) {
+            if ($updatedRole === false) {
                 http_response_code(404);
                 echo json_encode([
                     'error' => 'Role non trouvé'
@@ -105,7 +105,7 @@ class RolesCrudController
         // supprimer
         if ($uriPartsCount === 3 && $uriParts[1] === "role" && $httpMethod === "DELETE") {
             $deletedRole = $this->rolesCrud->deleteRole($id);
-            if ($deletedRole === 0) {
+            if ($deletedRole === false) {
                 http_response_code(404);
                 echo json_encode([
                     'error' => 'Role non trouvé'
