@@ -31,3 +31,17 @@ Pendant cette étape j'ai aussi déporté le gestionnaire d'exception de l'index
 
 # CRUD Roles
 J'ai créé un CrudRoles et un CrudRoleController sur le même modele que le CrudActor
+
+# Création d'un CRUD parent
+
+j'ai décidé de créer un crud parent dont les Cruds Actor et Roles hériteront.
+
+## Problèmes rencontrés
+Pour le create et le update je n'ai pas le même nombre de colonnes dans chaque table et j'ai dû adapter la requête.  
+
+Pour le create j'ai utilisé des paramètres positionnels  
+![crudCreate](/img/crud-create.png "crud create")
+
+Pour le update j'ai voulu utiliser la même méthode mais j'ai eu un soucis à cause de l'id que je nommais, j'ai donc utilisé une autre méthode pour n'utiliser que des paramètre nommé  
+![crudUpdate](/img/crud-update.png "crud update")
+
