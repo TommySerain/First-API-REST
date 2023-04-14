@@ -42,6 +42,6 @@ Pour le create et le update je n'ai pas le même nombre de colonnes dans chaque 
 Pour le create j'ai utilisé des paramètres positionnels  
 ![crudCreate](/img/crud-create.png "crud create")
 
-Pour le update j'ai voulu utiliser la même méthode mais j'ai eu un soucis à cause de l'id que je nommais, j'ai donc utilisé une autre méthode pour n'utiliser que des paramètre nommé  
+Pour le update j'ai voulu utiliser la même méthode mais j'ai eu un soucis à cause de l'id que je nommais, j'ai donc utilisé une autre méthode pour n'utiliser que des paramètres nommés  
 ![crudUpdate](/img/crud-update.png "crud update")
 
