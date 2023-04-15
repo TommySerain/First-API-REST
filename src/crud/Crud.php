@@ -58,7 +58,7 @@ abstract class Crud
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($data);
 
-        return ($stmt->rowCount() === 0) ? false : true;
+        return $stmt->rowCount() !== 0;
     }
 
     // Delete
@@ -67,6 +67,6 @@ abstract class Crud
         $query = "DELETE FROM $this->table WHERE $this->columnId=:id";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(["id" => $id]);
-        return ($stmt->rowCount() === 0) ? false : true;
+        return $stmt->rowCount() !== 0;
     }
 }
