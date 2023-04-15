@@ -4,8 +4,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\config\DbInitializer;
 use App\controller\ActorsCrudController;
+use App\controller\CrudController;
 use App\controller\RolesCrudController;
+use App\exception\CrudException;
 use App\exception\ExceptionHandler;
+use App\exception\RessourceNotFoundException;
+use App\exception\URIException;
 use Symfony\Component\Dotenv\Dotenv;
 
 
@@ -28,8 +32,20 @@ $resourceName = $uriParts[1];
 // Crud Ressource actor
 // collection
 if (str_contains($uri, "/actor")) {
-    $actorController = new ActorsCrudController($pdo, $uri, $httpMethod, $uriParts, $uriPartsCount);
+    try {
+        $actorController = new ActorsCrudController($pdo, $uri, $httpMethod, $uriParts, $uriPartsCount);
+    } catch (CrudException $e) {
+    }
 }
 if (str_contains($uri, "/role")) {
-    $roleController = new RolesCrudController($pdo, $uri, $httpMethod, $uriParts, $uriPartsCount);
+    try {
+        $roleController = new RolesCrudController($pdo, $uri, $httpMethod, $uriParts, $uriPartsCount);
+    } catch (CrudException $e) {
+    }
+}
+if (!str_contains($uri, "/actor") && !str_contains($uri, "/actor")) {
+    try {
+        $actorController = new CrudController($pdo, $uri, $httpMethod, $uriParts, $uriPartsCount);
+    } catch (CrudException $e) {
+    }
 }
