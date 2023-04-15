@@ -37,11 +37,32 @@ J'ai créé un CrudRoles et un CrudRoleController sur le même modele que le Cru
 j'ai décidé de créer un crud parent dont les Cruds Actor et Roles hériteront.
 
 ## Problèmes rencontrés
-Pour le create et le update je n'ai pas le même nombre de colonnes dans chaque table et j'ai dû adapter la requête.  
+- Pour le create et le update je n'ai pas le même nombre de colonnes dans chaque table et j'ai dû adapter la requête.  
 
-Pour le create j'ai utilisé des paramètres positionnels  
+- Pour le create j'ai utilisé des paramètres positionnels  
 ![crudCreate](/img/crud-create.png "crud create")
 
-Pour le update j'ai voulu utiliser la même méthode mais j'ai eu un soucis à cause de l'id que je nommais, j'ai donc utilisé une autre méthode pour n'utiliser que des paramètres nommés  
+- Pour le update j'ai voulu utiliser la même méthode mais j'ai eu un soucis à cause de l'id que je nommais, j'ai donc utilisé une autre méthode pour n'utiliser que des paramètres nommés  
 ![crudUpdate](/img/crud-update.png "crud update")
 
+# Création d'un CRUD Controller parent
+
+j'ai créé un crudController parent dont les crudcontroller Actors et Role hériteront.
+
+## Problèmes rencontrés
+- Dans mes cruds d'origine je pouvais directement définir un $actorCrud comme étant une instance de ActorCrud ou de RoleCrud.  
+Avec cette nouvelle méthode j'ai dû définir un $crud dans un if.  
+  
+- Quand j'ai fais ce CRUD controller parent, au départ, j'ai tout mis et j'ai dû ajouter des conditions dans les if avec le nom de mes ressources dans les méthodes de POST et de PUT :  
+![CrudController-avant-abstract](/img/CrudController-avant-abstract.png "CrudController-avant-abstract")  
+  
+- Pour éviter ça, j'ai choisi de transformer la class CrudController en class abstraite pour pouvoir passer ces méthodes en méthodes abstraites :  
+![CrudController-après-abstract](/img/CrudController-après-abstract.png "CrudController-après-abstract")  
+  
+# Simplification du code
+
+## Création d'une class HTTPMessageCode
+Cette class regroupe les message HTTP que j'utilise dans cette API pour pouvoir les appeler plus clairement.
+  
+## Création d'exceptions
+Pour simplifier la lecture du code, création de plusieurs exceptions avec plusieurs héritages qui seront catch directement dans l'index.
