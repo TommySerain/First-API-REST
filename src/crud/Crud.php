@@ -4,7 +4,7 @@ namespace App\crud;
 
 use PDO;
 
-class Crud
+abstract class Crud
 {
     protected string $table;
     protected string $columnId;
