@@ -43,9 +43,4 @@ if (str_contains($uri, "/role")) {
     } catch (CrudException $e) {
     }
 }
-if (!str_contains($uri, "/actor") && !str_contains($uri, "/actor")) {
-    try {
-        $actorController = new CrudController($pdo, $uri, $httpMethod, $uriParts, $uriPartsCount);
-    } catch (CrudException $e) {
-    }
-}
+
