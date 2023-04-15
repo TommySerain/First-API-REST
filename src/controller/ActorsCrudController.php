@@ -9,6 +9,7 @@ class ActorsCrudController
 {
     private const ACCEPTED_COLLECTION_METHODS = ["GET", "POST"];
     private const ACCEPTED_RESOURCE_METHODS = ["GET", "PUT", "DELETE"];
+    private const ACCEPTED_GENDER = ["Male", "Female", "Other"];
     private ActorsCrud $actorsCrud;
     public function __construct(
         private PDO $pdo,
@@ -33,12 +34,12 @@ class ActorsCrudController
             exit;
         }
 
-
+        // Read
         if ($uri === "/actor" && $httpMethod === "GET") {
             echo json_encode($this->actorsCrud->readAllActors());
             exit;
         }
-
+        // Create
         if ($uri === "/actor" && $httpMethod === "POST") {
             $data = json_decode(file_get_contents('php://input'), true);
 
@@ -49,6 +50,12 @@ class ActorsCrudController
                 ]);
                 exit;
             }
+            if (!in_array(ucfirst(strtolower($data['gender_a'])), self::ACCEPTED_GENDER)) {
+                echo json_encode([
+                    'error' => 'Les genres accteptés sont : ' . implode(" - ", self::ACCEPTED_GENDER)
+                ]);
+                exit;
+            };
             json_encode($this->actorsCrud->createActor($data));
             $insertActorId = $pdo->lastInsertId();
             http_response_code(201);
@@ -68,7 +75,7 @@ class ActorsCrudController
             exit;
         }
 
-        // lire
+        // Read
         if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "GET") {
             $findActor = $this->actorsCrud->readOneActor($id);
             if ($findActor === false) {
@@ -80,7 +87,7 @@ class ActorsCrudController
             http_response_code(200);
         }
 
-        // modifier
+        // Update
         if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "PUT") {
             $data = json_decode(file_get_contents("php://input"), true);
             if (!isset($data['firstname_a']) || !isset($data['name_a']) || !isset($data['gender_a'])) {
@@ -90,6 +97,12 @@ class ActorsCrudController
                 ]);
                 exit;
             }
+            if (!in_array(ucfirst(strtolower($data['gender_a'])), self::ACCEPTED_GENDER)) {
+                echo json_encode([
+                    'error' => 'Les genres accteptés sont : ' . implode(" - ", self::ACCEPTED_GENDER)
+                ]);
+                exit;
+            };
             $updatedActor = $this->actorsCrud->updateActor($data, $id);
             if ($updatedActor === false) {
                 http_response_code(404);
@@ -102,7 +115,7 @@ class ActorsCrudController
             exit;
         }
 
-        // supprimer
+        // Delete
         if ($uriPartsCount === 3 && $uriParts[1] === "actor" && $httpMethod === "DELETE") {
             $deletedActor = $this->actorsCrud->deleteActor($id);
             if ($deletedActor === false) {

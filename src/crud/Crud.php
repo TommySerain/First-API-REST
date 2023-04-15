@@ -49,7 +49,7 @@ class Crud
     public function update(array $data, int $id): bool
     {
         $setColumns = '';
-        foreach ($data as $key => $value) {
+        foreach ($data as $key => $key) {
             $setColumns .= "$key = :$key, ";
         }
         $setColumns = rtrim($setColumns, ', ');
