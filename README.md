@@ -73,4 +73,7 @@ Pour simplifier la lecture du code, création de plusieurs exceptions avec plusi
   
 # Ajout d'un client JS
 
-J'ai rapidement ajouté un client js mais je n'ai eu le temps de le faire que pour les rôles et il n'est pas du tout optimal
+J'ai rapidement ajouté un client js mais je n'ai eu le temps de le faire que pour les rôles et il n'est pas du tout optimal.  
+  
+J'ai dû également ajouter un bout de code dans le fichier index.php pour que mon client puisse utiliser les méthodes put et delete.  
+  
