@@ -71,3 +71,6 @@ Cette class regroupe les message HTTP que j'utilise dans cette API pour pouvoir 
 ## Création d'exceptions
 Pour simplifier la lecture du code, création de plusieurs exceptions avec plusieurs héritages qui seront catch directement dans l'index.  
   
+# Ajout d'un client JS
+
+J'ai rapidement ajouté un client js mais je n'ai eu le temps de le faire que pour les rôles et il n'est pas du tout optimal
